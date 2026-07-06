@@ -524,7 +524,7 @@
         font-size: clamp(28px, 4.4vw, 48px);
         font-weight: 500;
         line-height: 1.08;
-        text-align: center;
+        text-align: left;
       }
 
       .faq__answer-wrapper {
@@ -546,7 +546,7 @@
         color: #2d3748;
         font-size: 18px;
         line-height: 1.6;
-        text-align: center;
+        text-align: left;
       }
 
       .faq__answer strong {
@@ -943,17 +943,37 @@
           font-size: clamp(43px, 14vw, 64px);
         }
 
+        .faq__list {
+          width: min(680px, calc(100% - 24px));
+        }
+
         .faq__item {
-          padding: 20px 54px;
+          padding: 16px 56px 16px 20px;
         }
 
         .faq__question {
-          font-size: clamp(25px, 7.2vw, 34px);
+          font-size: clamp(17px, 5.2vw, 22px);
+          text-align: left;
         }
 
         .faq__answer {
           padding-top: 12px;
-          text-align: center;
+          text-align: left;
+          font-size: 15px;
+        }
+
+        .faq__toggle {
+          top: 14px;
+          right: 14px;
+          width: 32px;
+          height: 32px;
+        }
+
+        .faq__toggle::before {
+          width: 9px;
+          height: 9px;
+          border-right: 3px solid #fff;
+          border-bottom: 3px solid #fff;
         }
 
         .carousel-wrapper {

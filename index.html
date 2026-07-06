@@ -1158,9 +1158,69 @@
           text-align: left;
         }
       }
+
+      /* Announcement Bar */
+      .announcement-bar {
+        background: #e53e3e;
+        color: #fff;
+        text-align: center;
+        padding: 10px 18px;
+        font-size: clamp(12px, 1.8vw, 15px);
+        letter-spacing: 0.05em;
+        z-index: 999;
+        position: relative;
+        text-transform: uppercase;
+      }
+      .announcement-bar__text {
+        margin: 0;
+        line-height: 1.4;
+      }
+
+      /* Countdown Timer Styles */
+      .countdown-container {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: #fff5f5;
+        border: 1px solid #fed7d7;
+        color: #c53030;
+        padding: 6px 16px;
+        border-radius: 8px;
+        font-size: clamp(13px, 1.8vw, 16px);
+        font-weight: 700;
+        margin: 8px auto 14px;
+      }
+      .countdown-timer {
+        font-family: monospace;
+        font-size: clamp(14px, 1.8vw, 17px);
+        color: #e53e3e;
+        font-weight: 900;
+      }
+      .guarantee-cta__cta-wrap .countdown-container {
+        margin: 0 0 12px 0;
+      }
+      
+      .cta-price-warning {
+        font-size: 13px;
+        color: #e53e3e;
+        margin: 6px 0 0 0;
+        font-style: italic;
+        text-align: center;
+      }
+      @media (min-width: 768px) {
+        .guarantee-cta__cta-wrap .cta-price-warning {
+          text-align: left;
+        }
+      }
     </style>
   </head>
   <body>
+    <div class="announcement-bar">
+      <p class="announcement-bar__text">
+        🚨 <strong>¡OFERTA ESPECIAL!</strong> 80% DE DESCUENTO + 6 REGALOS EXCLUSIVOS SOLO POR HOY.
+      </p>
+    </div>
+
     <main class="hero">
       <section class="hero__content" aria-labelledby="hero-title">
         <h1 class="hero__title" id="hero-title">
@@ -1199,6 +1259,10 @@
         </figure>
 
         <p class="cta-price-tag">Único pago de solo <strong>$12.000 ARS</strong></p>
+        <div class="countdown-container">
+          <span>La oferta termina en:</span>
+          <span class="countdown-timer">15:00</span>
+        </div>
         <a class="hero__cta" href="#comprar" aria-label="Comprar mi pack">
           <span>¡Sí, quiero mi pack!</span>
         </a>
@@ -1620,6 +1684,10 @@
           
           <div class="guarantee-cta__cta-wrap">
             <p class="cta-price-tag">Todo incluido por solo <strong>$12.000 ARS</strong></p>
+            <div class="countdown-container">
+              <span>La oferta termina en:</span>
+              <span class="countdown-timer">15:00</span>
+            </div>
             <a class="bonuses__cta guarantee-cta__btn" href="https://mpago.la/2S5kFwV" aria-label="Comprar mi pack">
               <span>¡Sí, quiero mi pack!</span>
             </a>
@@ -1627,6 +1695,9 @@
             <p class="hero__safe guarantee-cta__safe">
               <span class="hero__safe-icon" aria-hidden="true"></span>
               Pago seguro. Recibirás acceso inmediato a tu correo electrónico tras el pago.
+            </p>
+            <p class="cta-price-warning">
+              🚨 <strong>Atención:</strong> Al finalizar el contador, la oferta expira y el precio volverá a su valor original de $30.000 ARS.
             </p>
 
             <!-- Payment Methods Logos (Conversion Booster) -->
@@ -1756,6 +1827,41 @@
         }, { passive: true });
         
         startAutoplay();
+
+        // Countdown Timer Logic
+        const COUNTDOWN_TIME = 15 * 60; // 15 minutes in seconds
+        let timerEnd = sessionStorage.getItem('timer_end');
+        
+        if (!timerEnd) {
+          timerEnd = Date.now() + COUNTDOWN_TIME * 1000;
+          sessionStorage.setItem('timer_end', timerEnd);
+        } else {
+          timerEnd = parseInt(timerEnd, 10);
+        }
+        
+        const updateTimer = () => {
+          const now = Date.now();
+          let timeLeft = Math.round((timerEnd - now) / 1000);
+          
+          if (timeLeft <= 0) {
+            // Reset timer when it reaches 0 for continuous urgency
+            timerEnd = Date.now() + COUNTDOWN_TIME * 1000;
+            sessionStorage.setItem('timer_end', timerEnd);
+            timeLeft = COUNTDOWN_TIME;
+          }
+          
+          const minutes = Math.floor(timeLeft / 60);
+          const seconds = timeLeft % 60;
+          const displayStr = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+          
+          const timers = document.querySelectorAll('.countdown-timer');
+          timers.forEach(timer => {
+            timer.textContent = displayStr;
+          });
+        };
+        
+        updateTimer();
+        setInterval(updateTimer, 1000);
       });
     </script>
   </body>

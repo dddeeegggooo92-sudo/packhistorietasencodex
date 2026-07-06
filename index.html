@@ -56,10 +56,32 @@
 
       .hero__subtitle {
         max-width: 820px;
-        margin: clamp(24px, 2.7vw, 34px) auto 0;
+        margin: clamp(14px, 2vw, 20px) auto 0;
         font-size: clamp(24px, 3.3vw, 38px);
         font-weight: 400;
         line-height: 1.2;
+      }
+
+      .hero__rating {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        margin-top: clamp(14px, 2vw, 20px);
+      }
+
+      .hero__star {
+        width: clamp(22px, 2.7vw, 30px);
+        height: clamp(22px, 2.7vw, 30px);
+        fill: #f5c830;
+      }
+
+      .hero__rating-text {
+        font-size: clamp(18px, 2.2vw, 24px);
+        font-weight: 900;
+        color: #000;
+        line-height: 1;
+        margin-left: 4px;
       }
 
       .hero__subtitle strong {
@@ -117,52 +139,7 @@
         padding: 0 22px;
       }
 
-      .hero__trust {
-        display: inline-flex;
-        width: auto;
-        max-width: calc(100% - 32px);
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
-        margin: clamp(18px, 2.4vw, 26px) auto 0;
-        padding: 10px 18px;
-        border: 1px solid rgba(7, 152, 38, 0.18);
-        border-radius: 999px;
-        background: rgba(8, 201, 52, 0.07);
-        color: #161616;
-        font-size: clamp(14px, 1.55vw, 17px);
-        font-weight: 600;
-        line-height: 1.2;
-      }
 
-      .hero__trust-icon {
-        position: relative;
-        display: grid;
-        width: 24px;
-        height: 24px;
-        place-items: center;
-        flex: 0 0 auto;
-        border-radius: 999px;
-        background: #08af2d;
-      }
-
-      .hero__trust-icon::before {
-        width: 10px;
-        height: 6px;
-        border-bottom: 3px solid #fff;
-        border-left: 3px solid #fff;
-        content: "";
-        transform: translateY(-1px) rotate(-45deg);
-      }
-
-      .hero__trust-muted {
-        color: #4f4f4f;
-        font-weight: 500;
-      }
-
-      .hero__trust-separator {
-        color: rgba(0, 0, 0, 0.22);
-      }
 
       .includes {
         padding: clamp(52px, 7vw, 92px) 18px clamp(84px, 10vw, 132px);
@@ -337,7 +314,7 @@
       .bonuses__list {
         display: grid;
         gap: 18px;
-        width: min(620px, calc(100% - 64px));
+        width: min(680px, calc(100% - 80px));
         margin: 0 auto;
       }
 
@@ -404,7 +381,8 @@
         line-height: 1.22;
       }
 
-      .bonuses__safe {
+      .bonuses__safe,
+      .hero__safe {
         display: inline-flex;
         align-items: center;
         gap: 10px;
@@ -414,7 +392,8 @@
         line-height: 1.2;
       }
 
-      .bonuses__safe-icon {
+      .bonuses__safe-icon,
+      .hero__safe-icon {
         position: relative;
         width: 18px;
         height: 16px;
@@ -423,7 +402,8 @@
         background: #f4c21b;
       }
 
-      .bonuses__safe-icon::before {
+      .bonuses__safe-icon::before,
+      .hero__safe-icon::before {
         position: absolute;
         left: 4px;
         top: -8px;
@@ -498,13 +478,22 @@
       .faq__list {
         display: grid;
         gap: 14px;
+        width: min(680px, calc(100% - 80px));
+        margin: 0 auto;
       }
 
       .faq__item {
         position: relative;
-        padding: clamp(22px, 3vw, 30px) clamp(64px, 8vw, 84px) clamp(22px, 3vw, 30px) clamp(20px, 3vw, 28px);
+        padding: clamp(22px, 3vw, 30px) clamp(64px, 8vw, 84px);
         border-radius: 4px;
         background: #f1f3f8;
+        cursor: pointer;
+        user-select: none;
+        transition: background-color 0.2s ease;
+      }
+
+      .faq__item:hover {
+        background: #e6e9f0;
       }
 
       .faq__question {
@@ -513,14 +502,28 @@
         font-size: clamp(28px, 4.4vw, 48px);
         font-weight: 500;
         line-height: 1.08;
+        text-align: center;
+      }
+
+      .faq__answer-wrapper {
+        display: grid;
+        grid-template-rows: 0fr;
+        transition: grid-template-rows 0.3s ease-out;
+        overflow: hidden;
+      }
+
+      .faq__item.is-open .faq__answer-wrapper {
+        grid-template-rows: 1fr;
       }
 
       .faq__answer {
+        min-height: 0;
         max-width: 760px;
-        margin: 16px auto 0;
-        color: #171717;
-        font-size: clamp(15px, 2vw, 18px);
-        line-height: 1.35;
+        margin: 0 auto;
+        padding-top: 16px;
+        color: #2d3748;
+        font-size: 18px;
+        line-height: 1.6;
         text-align: center;
       }
 
@@ -536,6 +539,7 @@
         height: clamp(38px, 5vw, 48px);
         border-radius: 999px;
         background: #171717;
+        pointer-events: none;
       }
 
       .faq__toggle::before {
@@ -548,6 +552,12 @@
         border-bottom: 5px solid #fff;
         content: "";
         transform: translate(-50%, -50%) rotate(45deg);
+        transition: transform 0.3s ease-out, top 0.3s ease-out;
+      }
+
+      .faq__item.is-open .faq__toggle::before {
+        transform: translate(-50%, -50%) rotate(-135deg);
+        top: 55%;
       }
 
       .faq__no {
@@ -594,11 +604,7 @@
           letter-spacing: -0.01em;
         }
 
-        .hero__trust {
-          flex-wrap: wrap;
-          row-gap: 5px;
-          padding: 10px 14px;
-        }
+
 
         .includes {
           padding-top: 54px;
@@ -665,8 +671,9 @@
           font-size: clamp(18px, 5vw, 24px);
         }
 
-        .bonuses__list {
-          width: calc(100% - 36px);
+        .bonuses__list,
+        .faq__list {
+          width: calc(100% - 64px);
         }
 
         .bonuses__cta {
@@ -707,7 +714,8 @@
           font-size: clamp(15px, 4.4vw, 18px);
         }
 
-        .bonuses__safe {
+        .bonuses__safe,
+        .hero__safe {
           width: min(100%, 310px);
           align-items: flex-start;
         }
@@ -721,7 +729,7 @@
         }
 
         .faq__item {
-          padding: 20px 54px 20px 16px;
+          padding: 20px 54px;
         }
 
         .faq__question {
@@ -729,8 +737,8 @@
         }
 
         .faq__answer {
-          margin-top: 12px;
-          text-align: left;
+          padding-top: 12px;
+          text-align: center;
         }
       }
     </style>
@@ -741,6 +749,25 @@
         <h1 class="hero__title" id="hero-title">
           Reviví tus historietas favoritas.
         </h1>
+
+        <div class="hero__rating" aria-label="Calificación 4/5 estrellas">
+          <svg class="hero__star" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+          </svg>
+          <svg class="hero__star" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+          </svg>
+          <svg class="hero__star" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+          </svg>
+          <svg class="hero__star" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+          </svg>
+          <svg class="hero__star" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+          </svg>
+          <span class="hero__rating-text">4/5.</span>
+        </div>
 
         <p class="hero__subtitle">
           <strong>Patoruzú, Patoruzito e Isidoro.</strong><br />
@@ -758,14 +785,10 @@
           <span>¡Sí, quiero mi pack!</span>
         </a>
 
-        <div class="hero__trust" aria-label="Pago seguro y compra protegida">
-          <span class="hero__trust-icon" aria-hidden="true"></span>
-          <strong>Pago seguro</strong>
-          <span class="hero__trust-separator" aria-hidden="true">|</span>
-          <span class="hero__trust-muted">Compra protegida</span>
-          <span class="hero__trust-separator" aria-hidden="true">|</span>
-          <span class="hero__trust-muted">Acceso inmediato</span>
-        </div>
+        <p class="hero__safe">
+          <span class="hero__safe-icon" aria-hidden="true"></span>
+          Pago seguro. Recibirás acceso inmediato a tu correo electrónico tras el pago.
+        </p>
       </section>
     </main>
 
@@ -942,59 +965,88 @@
 
         <div class="faq__list">
           <article class="faq__item">
-            <h3 class="faq__question">1. ¿Qué incluye el pack de historietas?</h3>
-            <p class="faq__answer">
-              Incluye la colección de <strong>Patoruzú, Patoruzito, e Isidoro en formato PDF</strong>,
-              listos para leer en cualquier dispositivo (PC, celular o tablet).
-            </p>
+            <h3 class="faq__question"><strong>1.</strong> ¿Qué incluye el pack de historietas?</h3>
+            <div class="faq__answer-wrapper">
+              <p class="faq__answer">
+                Incluye la colección de <strong>Patoruzú, Patoruzito, e Isidoro en formato PDF</strong>,
+                listos para leer en cualquier dispositivo (PC, celular o tablet).
+              </p>
+            </div>
             <span class="faq__toggle" aria-hidden="true"></span>
           </article>
 
           <article class="faq__item">
-            <h3 class="faq__question">2. ¿Cómo recibo las historietas después del pago?</h3>
-            <p class="faq__answer">
-              Una vez realizado el pago, te llegará un <strong>correo con el enlace de Google Drive</strong>
-              para acceder y descargar todas las historietas.
-            </p>
+            <h3 class="faq__question"><strong>2.</strong> ¿Cómo recibo las historietas después del pago?</h3>
+            <div class="faq__answer-wrapper">
+              <p class="faq__answer">
+                Una vez realizado el pago, te llegará un <strong>correo con el enlace de Google Drive</strong>
+                para acceder y descargar todas las historietas.
+              </p>
+            </div>
             <span class="faq__toggle" aria-hidden="true"></span>
           </article>
 
           <article class="faq__item">
-            <h3 class="faq__question">3. ¿Es acceso temporal o permanente?</h3>
-            <p class="faq__answer">
-              El acceso es <strong>permanente</strong>. Puedes descargarlos cuando quieras y leerlos desde tu dispositivo.
-            </p>
+            <h3 class="faq__question"><strong>3.</strong> ¿Es acceso temporal o permanente?</h3>
+            <div class="faq__answer-wrapper">
+              <p class="faq__answer">
+                El acceso es <strong>permanente</strong>. Puedes descargarlos cuando quieras y leerlos desde tu dispositivo.
+              </p>
+            </div>
             <span class="faq__toggle" aria-hidden="true"></span>
           </article>
 
           <article class="faq__item">
-            <h3 class="faq__question">4. ¿Se pueden descargar e imprimir?</h3>
-            <p class="faq__answer">
-              Sí, puedes <strong>descargarlos e imprimirlos en papel.</strong>
-            </p>
+            <h3 class="faq__question"><strong>4.</strong> ¿Se pueden descargar e imprimir?</h3>
+            <div class="faq__answer-wrapper">
+              <p class="faq__answer">
+                Sí, puedes <strong>descargarlos e imprimirlos en papel.</strong>
+              </p>
+            </div>
             <span class="faq__toggle" aria-hidden="true"></span>
           </article>
 
           <article class="faq__item">
-            <h3 class="faq__question">5. ¿Ocupan espacio en mi dispositivo?</h3>
-            <p class="faq__answer">
-              No <span class="faq__no" aria-hidden="true"></span>. Las historietas están alojadas en
-              <strong>Google Drive</strong>, por lo que <strong>no ocupan espacio</strong> en tu celular o computadora,
-              a menos que decidas descargarlos.
-            </p>
+            <h3 class="faq__question"><strong>5.</strong> ¿Ocupan espacio en mi dispositivo?</h3>
+            <div class="faq__answer-wrapper">
+              <p class="faq__answer">
+                No <span class="faq__no" aria-hidden="true"></span>. Las historietas están alojadas en
+                <strong>Google Drive</strong>, por lo que <strong>no ocupan espacio</strong> en tu celular o computadora,
+                a menos que decidas descargarlos.
+              </p>
+            </div>
             <span class="faq__toggle" aria-hidden="true"></span>
           </article>
 
           <article class="faq__item">
-            <h3 class="faq__question">6. ¿Y si no recibo el correo?</h3>
-            <p class="faq__answer">
-              Revisa tu carpeta de <strong>Spam/Promociones</strong> o contáctanos por teléfono para reenviarlo.
-              Se recomienda que al registrar tu compra agregues Gmail correctamente.
-            </p>
+            <h3 class="faq__question"><strong>6.</strong> ¿Y si no recibo el correo?</h3>
+            <div class="faq__answer-wrapper">
+              <p class="faq__answer">
+                Revisa tu carpeta de <strong>Spam/Promociones</strong> o contáctanos por teléfono para reenviarlo.
+                Se recomienda que al registrar tu compra agregues Gmail correctamente.
+              </p>
+            </div>
             <span class="faq__toggle" aria-hidden="true"></span>
           </article>
         </div>
       </div>
     </section>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const faqItems = document.querySelectorAll('.faq__item');
+        faqItems.forEach(item => {
+          item.addEventListener('click', () => {
+            // Close other open items (accordion behavior)
+            faqItems.forEach(otherItem => {
+              if (otherItem !== item && otherItem.classList.contains('is-open')) {
+                otherItem.classList.remove('is-open');
+              }
+            });
+            
+            item.classList.toggle('is-open');
+          });
+        });
+      });
+    </script>
   </body>
 </html>
